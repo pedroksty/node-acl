@@ -1,0 +1,62 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id String @id
+
+  username String @unique
+  password String
+
+  created_at DateTime @default(now())
+
+  permission Permission[]
+  role       Role[]
+}
+
+model Permission {
+  id String @id
+
+  name        String @unique
+  description String
+
+  created_at DateTime @default(now())
+
+  user User[]
+  role Role[]
+}
+
+model Role {
+  id String @id
+
+  name        String @unique
+  description String
+
+  created_at DateTime @default(now())
+
+  user       User[]
+  permission Permission[]
+}
+
+model Product {
+  id String @id
+
+  name        String
+  description String
+  price       Int
+
+  created_at DateTime @default(now())
+}
+
+model Solicitation {
+  id          String @id
+  name        String
+  description String
+
+  created_at DateTime @default(now())
+}
