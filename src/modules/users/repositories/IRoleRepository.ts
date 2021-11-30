@@ -6,4 +6,5 @@ export interface IRoleRepository {
   findByName(roleName: string): Promise<Role>
   list(): Promise<Role[]>
   create(data: ICreateRoleDTO): Promise<Role>
+  addPermissions(roleId: string, permissions: string[]): Promise<Role>
 }

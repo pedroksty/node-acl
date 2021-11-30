@@ -7,6 +7,22 @@ import { Role } from '../entities/Role'
 const prisma = new PrismaClient()
 
 class RoleRepository implements IRoleRepository {
+  async addPermissions(roleId: string, permissions: string[]): Promise<Role> {
+    const role = await prisma.role.update({
+      where: { id: roleId },
+      data: {
+        permission: {
+          connect: permissions.map(permission => { return { id: permission } })
+        }
+      },
+      include: {
+        permission: true
+      }
+    })
+
+    return role
+  }
+
   async findByName(roleName: string): Promise<Role> {
     const role = await prisma.role.findUnique({
       where: { name: roleName }
