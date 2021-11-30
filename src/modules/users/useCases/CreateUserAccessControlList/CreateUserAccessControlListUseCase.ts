@@ -6,8 +6,8 @@ import { inject, injectable } from 'tsyringe'
 
 interface IRequest {
   userId: string
-  roles: string[]
-  permissions: string[]
+  roles?: string[]
+  permissions?: string[]
 }
 
 interface IResponse {
@@ -36,8 +36,15 @@ export class CreateUserAccessControlListUseCase {
       throw new AppError('User not found', 404)
     }
 
-    return {
+    console.log(roles)
+    console.log(permissions)
 
-    }
+    const updatedUser = await this.userRepository.addAccess({
+      userId,
+      roles,
+      permissions
+    })
+
+    return updatedUser
   }
 }

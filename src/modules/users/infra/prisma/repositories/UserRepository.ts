@@ -18,6 +18,10 @@ class UserRepository implements IUserRepository {
         permission: {
           connect: permissions.map(permission => { return { id: permission } })
         }
+      },
+      include: {
+        permission: true,
+        role: true
       }
     })
 
